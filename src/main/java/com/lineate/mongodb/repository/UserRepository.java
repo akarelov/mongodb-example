@@ -2,11 +2,15 @@ package com.lineate.mongodb.repository;
 
 import com.lineate.mongodb.domain.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+
+@Component
 public interface UserRepository extends MongoRepository<User, String> {
-    User findByFirstName(String firstName);
+    List<User> findByFirstName(String firstName);
 
-    User findByLastName(String lastName);
+    List<User> findByLastName(String lastName);
 
-    User findByPosition(String position);
+    List<User> findByPosition(String position);
 }
