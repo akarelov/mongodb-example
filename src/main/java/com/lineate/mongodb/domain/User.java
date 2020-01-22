@@ -1,8 +1,7 @@
 package com.lineate.mongodb.domain;
 
 import org.bson.types.ObjectId;
-
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
 
 public class User {
     @Id
