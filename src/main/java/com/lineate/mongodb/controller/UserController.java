@@ -2,9 +2,13 @@ package com.lineate.mongodb.controller;
 
 import com.lineate.mongodb.domain.User;
 import com.lineate.mongodb.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -18,12 +22,12 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getUsers() {
+    public Flux<User> getUsers() {
         return userRepository.findAll();
     }
 
     @GetMapping(value = "/add")
-    public List<User> addUser(@RequestParam(value = "first") String firstName,
+    public Flux<User> addUser(@RequestParam(value = "first") String firstName,
                               @RequestParam(value = "last") String lastName,
                               @RequestParam(value = "pos") String position) {
         User user = new User();
@@ -39,6 +43,11 @@ public class UserController {
         return userRepository.findByFirstName(firstName);
     }
 
+    @GetMapping(value = "/{id}")
+    public Mono<User> getUserById(@PathVariable String id) {
+        return userRepository.findById(id);
+    }
+
     @GetMapping(value = "/last")
     public List<User> getUserByLastName(@RequestParam(value = "first") String lastName) {
         return userRepository.findByLastName(lastName);
@@ -50,7 +59,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/remove")
-    public List<User> removeUsers() {
+    public Flux<User> removeUsers() {
         userRepository.deleteAll();
         return userRepository.findAll();
     }
